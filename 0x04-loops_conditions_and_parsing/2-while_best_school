@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This code printing Best school 10 time using whileloops
+count=0
+while [ $count -le 0 ]
+	do
+		echo "Best School"
+done
