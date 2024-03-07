@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-"Looping Best School string 10 times"
-for _ in {0..10}
+# Looping Best School string 10 times
+for _ in {1..10}
     do
         echo 'Best School' 
 done
