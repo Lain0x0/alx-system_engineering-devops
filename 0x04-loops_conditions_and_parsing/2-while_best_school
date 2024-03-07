@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This code printing Best school 10 time using whileloops
 count=0
-while [ $count -le 0 ]
+while [ $count -lt 10 ]
 	do
 		echo "Best School"
 		count=$((count + 1))
