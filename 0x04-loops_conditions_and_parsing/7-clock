@@ -2,23 +2,15 @@
 # Making clock
 
 hour=0
-minute=1
-count=0
 
-while [ $count -lt 70 ]
+while [ $hour -le 12 ]
 do
-    if [ "$minute" -eq 1 ]
-    then
-        echo "Hour: $hour"
-    fi
-    echo $minute
-
-    ((count++))
-    ((minute++))
-
-    if [ "$minute" -gt 59 ]
-    then
-        ((hour++))
-        minute=1
-    fi
-done
+  echo "Hour: $hour"
+  minute=1
+  while [ $minute -le 59 ]
+  do
+    echo "$minute"
+    (( minute++ ))
+  done
+  (( hour++ ))
+done | head -n 70
