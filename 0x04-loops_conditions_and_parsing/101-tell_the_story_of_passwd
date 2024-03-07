@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
-
-while IFS=':' read -r username _ userid groupid _ _ homedir shell; do
-    echo "The user $username is part of the $groupid gang, lives in $homedir and rides $shell."
-    echo -n "User ID's place is protected by the passcode. Please enter the passcode: "
-    read -r password
-    echo "The passcode you entered is $password. More info about the user $userid here: USER ID INFO"
-    echo
-done < "/etc/passwd"
+    # The file /etc/passwd has already been covered in a previous project and you should be familiar with it. Today we will make up a story based on it.
+    
+    password_path="/etc/passwd"
+    gap1=""
+    gap2=""
+    gap3=""
+    while IFS= read -r line
+    do
+        gap1="$(echo "$line" | cut -d":" -gap1)"
+        gap2="$(echo "$line" | cut -d":" -gap2)"
+        gap3="$(echo "$line" | cut -d":" -gap3)"
+        gap4="$(echo "$line" | cut -d":" -gap4)"
+        gap5="$(echo "$line" | cut -d":" -gap5)"
+        gap6="$(echo "$line" | cut -d":" -gap6)"
+        gap7="$(echo "$line" | cut -d":" -gap7)"
+        echo "The user ${gap1} is part of the ${gap2} gang, lives in ${gap3} and rides ${gap4}. ${gap5}'s place is protected by the passcode ${gap6}, more info about the user here: ${gap7}"
+    done < "$password_path"
