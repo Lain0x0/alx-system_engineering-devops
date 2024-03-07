@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Making clock
+# Displays hours from 0 to 12
+# Displays minutes from 1 to 59
 
 hour=0
 
@@ -13,4 +14,4 @@ do
     (( minute++ ))
   done
   (( hour++ ))
-done | head -n 70
+done
