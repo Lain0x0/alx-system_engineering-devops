@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Looping "To infinity and beyond" string and add sleep between each iteration
+n=0
+while [ $n == 0 ]
+do
+    echo "To infinity and beyond"
+    sleep 2
+done
