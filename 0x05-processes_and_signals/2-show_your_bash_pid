@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# showing my bash pid
+ps -auf
