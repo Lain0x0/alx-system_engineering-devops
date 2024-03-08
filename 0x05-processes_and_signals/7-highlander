@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # traping $pid using SIGTERM && looping a string
 n=0
-trap echo '"I am invincible!!!"' SIGTERM
+trap 'echo "I am invincible!!!"; kill -9 $(pgrep 7-highlander)' SIGTERM
 while [ $n == 0 ]
 do
     echo "To infinity and beyond"
