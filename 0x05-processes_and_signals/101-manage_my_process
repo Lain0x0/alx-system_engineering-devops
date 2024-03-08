@@ -1,9 +1,38 @@
 #!/usr/bin/env bash
-#  Manage my process
+# creating a script that manage your process
 
-n=0
-while [ $n -eq 0 ]
-do
-    sudo bash -c 'echo "I am alive!" >> /tmp/my_process'
-    sleep 2
-done
+
+PID_FILE="/var/run/my_process.pid"
+
+if [ "$1" == "start" ]; then
+    if [ -f "$PID_FILE" ]; then
+        echo "manage_my_process is already running."
+    else
+        ./manage_my_process &
+        echo $! > "$PID_FILE"
+        echo "manage_my_process started."
+    fi
+
+elif [ "$1" == "stop" ]; then
+    if [ -f "$PID_FILE" ]; then
+        pid=$(cat "$PID_FILE")
+        sudo kill "$pid"
+        rm -f "$PID_FILE"
+        echo "manage_my_process stopped."
+    else
+        echo "manage_my_process is not running."
+    fi
+
+elif [ "$1" == "restart" ]; then
+    if [ -f "$PID_FILE" ]; then
+        pid=$(cat "$PID_FILE")
+        sudo kill "$pid"
+        rm -f "$PID_FILE"
+    fi
+    ./manage_my_process &
+    echo $$ > "$PID_FILE"
+    echo "manage_my_process restarted."
+
+else
+    echo "Usage: manage_my_process {start|stop|restart}"
+fi
