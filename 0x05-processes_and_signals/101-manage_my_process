@@ -2,7 +2,7 @@
 #  Manage my process
 
 n=0
-while [ $n == 0 ]
+while [ $n -eq 0 ]
 do
     sudo bash -c 'echo "I am alive!" >> /tmp/my_process'
     sleep 2
