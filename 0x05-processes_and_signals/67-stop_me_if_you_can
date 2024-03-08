@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# stoping a pid by using pkill
+pkill -f ./7-highlander

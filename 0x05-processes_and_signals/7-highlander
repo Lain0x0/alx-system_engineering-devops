@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# traping $pid using SIGTERM && looping a string
+n=0
+trap "I am invincible!!!" SIGTERM
+while [ $n == 0 ]
+do
+    echo "To infinity and beyond"
+    sleep 2
+done
