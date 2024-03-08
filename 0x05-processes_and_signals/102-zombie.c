@@ -35,7 +35,7 @@ int main(void)
 
 		if (pid > 0)
 		{
-			fprintf(stdout, "Child process created, PID: %d\n", pid);
+			fprintf(stdout, "Zombie process created, PID: %d\n", pid);
 		}
 		else if (pid == 0)
 		{
