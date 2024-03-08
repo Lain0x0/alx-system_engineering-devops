@@ -4,7 +4,7 @@
 #include <sys/types.h>
 
 /**
- * infinite_while - Infinity loop
+ * infinite_while - Infinite loop (void).
  *
  * Return: Always 0
  */
@@ -19,23 +19,29 @@ int infinite_while(void)
 }
 
 /**
- * main - Entry Point
+ * main - Creates 5 zombie processes
  *
  * Return: Always 0
  */
 
 int main(void)
 {
-	int i = 0;
-	pid_t pid = fork();
+	int i;
+	pid_t pid;
 
-	if (pid > 0)
+	for (i = 0; i < 5; i++)
 	{
-		fprintf(stdout, "Zombie process created, PID: %d\n", pid);
-		return (0);
-	}
+		pid = fork();
 
-	infinite_while();
+		if (pid > 0)
+		{
+			fprintf(stdout, "Child process created, PID: %d\n", pid);
+		}
+		else if (pid == 0)
+		{
+			infinite_while();
+		}
+	}
 
 	return (0);
 }
