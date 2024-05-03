@@ -2,10 +2,6 @@
 <html>
 <head>
 
-<b>
-Configuration management
-</b>
-
 <br>
 
 <h2>Background Context</h2>
