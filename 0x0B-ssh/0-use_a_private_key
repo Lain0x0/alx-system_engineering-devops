@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 # using ssh to connect to server without pass using RSA key
 ssh -i ~/.ssh/school ubuntu@52.23.178.176
+
