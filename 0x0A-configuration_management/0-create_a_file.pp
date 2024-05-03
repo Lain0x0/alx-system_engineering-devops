@@ -1,5 +1,4 @@
-# creating a file in /tmp directory giving those requirements [path, permession, owner, group]
-# also this puppet file contain 'I love Puppet as content'
+# creating a file in /tmp directory
 
 file { 'school':
     ensure  => 'present',
