@@ -1,0 +1,6 @@
+!#/usr/bin/env bash
+# configuring ssh server using ssh FileConfiguration
+HOST *
+	IdentifyFile ~/.ssh/school
+	PasswordAuthentication no
+
