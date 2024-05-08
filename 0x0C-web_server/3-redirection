@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#Configure Nginx Server so that /redirect_me go to other page
+sudo apt-get -y update
+sudo apt-get -y install nginx
+sudo ufw allow "Nginx HTTP"
+mkdir -p /var/www/html/
+sudo chmod -R 755 /var/www
+echo 'Hello World!' > /var/www/html/index.html
+FILE_CONFIG="server {
+	listen 80 default_server;
+	root /var/www/html;
+	index index.html;
+	location / {
+		try_files \$uri \$uri/ =404;
+	}
+	if (\$request_filename ~ redirect_me){
+		rewrite ^ https://www.alxafrica.com permanent;
+	}
+}"
+bash -c "echo -e '$FILE_CONFIG' > /etc/nginx/sites-enabled/default"
+if [ "$(pgrep -c nginx)" -le 0 ]
+then
+	service nginx start
+else
+	service nginx restart
+fi
+
