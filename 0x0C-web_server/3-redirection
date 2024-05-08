@@ -1,27 +1,41 @@
 #!/usr/bin/env bash
-#Configure Nginx Server so that /redirect_me go to other page
-sudo apt-get -y update
-sudo apt-get -y install nginx
-sudo ufw allow "Nginx HTTP"
-mkdir -p /var/www/html/
-sudo chmod -R 755 /var/www
-echo 'Hello World!' > /var/www/html/index.html
-FILE_CONFIG="server {
-	listen 80 default_server;
-	root /var/www/html;
-	index index.html;
-	location / {
-		try_files \$uri \$uri/ =404;
-	}
-	if (\$request_filename ~ redirect_me){
-		rewrite ^ https://www.alxafrica.com permanent;
-	}
-}"
-bash -c "echo -e '$FILE_CONFIG' > /etc/nginx/sites-enabled/default"
-if [ "$(pgrep -c nginx)" -le 0 ]
-then
-	service nginx start
-else
-	service nginx restart
-fi
+#Configuring and Setup a Nginx Server
+apt-get update
+apt-get install -y nginx
 
+mkdir /etc/nginx/html
+
+touch /etc/nginx/html/index.html
+
+echo "Hello World!" > /etc/nginx/html/index.html
+# Sets Nginx listrning on port 80
+printf %s "server {
+     listen      80;
+     listen      [::]:80 default_server;
+     root        /etc/nginx/html;
+     index       index.html index.htm;
+}
+" > /etc/nginx/sites-available/default
+
+# Server Configuration
+echo "server {
+    listen 80;
+    listen [::]:80;
+
+    root /var/www/html;
+
+    # Add index.php to the list if you are using PHP
+    index index.html index.htm index.nginx-debian.html;
+
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+}" | sudo tee /etc/nginx/sites-available/redirect
+
+# Enabling the "redirect" method
+sudo ln -s /etc/nginx/sites-available/redirect /etc/nginx/sites-enabled/
+
+
+# Restarting Nginx Web Server
+sudo nginx -t
+sudo service nginx reload
