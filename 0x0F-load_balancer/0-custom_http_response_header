@@ -1,44 +1,28 @@
 #!/usr/bin/env bash
 # Configuring `web-02` to be identical to `web-01` and checked with shellcheck
+# Updating Packages
+sudo apt-get update
+sudo apt-get install -y nginx
 
-sudo apt-get -y update
-sudo apt-get -y install nginx
+# Creating an index.html page
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Allowing nginx on firewall
-sudo ufw allow "Nginx HTTP"
+# Performing a "moved permanently redirection" (301)
+new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Lain0x0;"
+sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
 
-# Creating new index page
-echo 'Hello World!' > /var/www/html/index.html
+# Creating a 404 Custom error page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
 
-# Creating custom 404 page
-echo "Ceci n'est pas une page" > /var/www/html/404.html
+sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
 
-# Configuring Nginx Server
-sudo cp /etc/nginx/sites-enabled/default nginx-sites-enabled_default.backup
+# Creating an HTTP response header
+sudo sed -i "/server_name _/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
 
-server_config=\
-"server {
-                listen 80 default_server;
-                listen [::]:80 default_server;
-                root /var/www/html;
-                index index.html
-                server_name_;
-                add_header X-Served-By \$hostname;
-                location / {
-                        try_files \$uri \$uri/ =404;
-                }
-                if (\$request_filename ~ redirect_me){
-                        rewrite ^ https://www.alxafrica.com/ permanent;
-                }
-                error_page 404 /error_404.html;
-                location = /error_404.html {
-                        internal;
-                }
-}"
+# Testing configurations for syntax errors
+sudo nginx -t
 
-#Bypassing shellcheck error
-echo "$server_config" | sudo dd status=none of=/etc/nginx/sites-enabled/default
-
-# Restarting the Nginx Server
+# Restart nginx after implementing changes
 sudo service nginx restart
 
