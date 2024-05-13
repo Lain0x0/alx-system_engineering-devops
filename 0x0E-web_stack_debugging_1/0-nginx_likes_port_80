@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Using debugging skills to solve problems with Nginx Server
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+# Restarting Nginx Server
+sudo service nginx restart
+
