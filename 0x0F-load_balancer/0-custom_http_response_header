@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Configuring `web-02` to be identical to `web-01` and checked with shellcheck
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+# Allowing nginx on firewall
+sudo ufw allow "Nginx HTTP"
+
+# Creating new index page
+echo 'Hello World!' > /var/www/html/index.html
+
+# Creating custom 404 page
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+# Configuring Nginx Server
+sudo cp /etc/nginx/sites-enabled/default nginx-sites-enabled_default.backup
+
+server_config=\
+"server {
+                listen 80 default_server;
+                listen [::]:80 default_server;
+                root /var/www/html;
+                index index.html
+                server_name_;
+                add_header X-Served-By \$hostname;
+                location / {
+                        try_files \$uri \$uri/ =404;
+                }
+                if (\$request_filename ~ redirect_me){
+                        rewrite ^ https://www.alxafrica.com/ permanent;
+                }
+                error_page 404 /error_404.html;
+                location = /error_404.html {
+                        internal;
+                }
+}"
+
+#Bypassing shellcheck error
+echo "$server_config" | sudo dd status=none of=/etc/nginx/sites-enabled/default
+
+# Restarting the Nginx Server
+sudo service nginx restart
+
