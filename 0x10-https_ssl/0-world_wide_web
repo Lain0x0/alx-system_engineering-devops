@@ -10,10 +10,10 @@ domain () {
 
 if [ "$#" == 1 ]
 then
-  domain "$1" "www"
-  domain "$1" "lb-01"
-  domain "$1" "web-01"
-  domain "$1" "web-02"
+  domain "$1" "www" "54.208.65.16"
+  domain "$1" "lb-01" "54.173.66.23"
+  domain "$1" "web-01" "54.209.208.34"
+  domain "$1" "web-02" "100.26.223.59"
 elif [ "$#" == 2 ]
 then
   domain "$1" "$2"
