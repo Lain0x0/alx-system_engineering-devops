@@ -4,7 +4,6 @@ sudo apt-get update
 #Setupping the ufw seetings
 sudo apt-get install -y ufw
 sudo ufw default deny incoming
-sudo ufw default deny outgoing
 
 #Allowign PORTS : 22, 80, 443
 sudo ufw allow 22
