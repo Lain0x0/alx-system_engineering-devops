@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Writing a bash script that accept a one argument
+sudo -u "$1" whoami
+
